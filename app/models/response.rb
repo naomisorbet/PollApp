@@ -10,7 +10,7 @@ class Response < ActiveRecord::Base
   attr_accessible :chooser_id, :choice_id
 
   validates :chooser_id, :choice_id, :presence => true
-  validate :validate_responder_not_author # , :validate_not_yet_responded
+  validate :validate_responder_not_author, :validate_not_yet_responded
 
   def validate_responder_not_author
     if chooser_id == question.poll.author_id
@@ -19,6 +19,7 @@ class Response < ActiveRecord::Base
   end
 
   def validate_not_yet_responded
+    puts "validator is running"
     responders = question.responses.map{ |r| r.chooser_id }
     if responders.include?(self.chooser_id)
       errors.add(:chooser_id, "you can only respond one time")
