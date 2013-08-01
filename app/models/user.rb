@@ -14,8 +14,14 @@ class User < ActiveRecord::Base
   has_many(
     :responses,
     :class_name => "Response",
-    :foreign_key => :chooser_id
+    :foreign_key => :chooser_id,
     :primary_key => :id
+  )
+
+  has_many(
+    :choices,
+    :through => :responses,
+    :source => :choice
   )
 
 end

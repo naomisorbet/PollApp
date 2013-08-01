@@ -1,7 +1,7 @@
 class Choice < ActiveRecord::Base
   attr_accessible :ch_string, :q_id
 
-  validates :ch_string, :q_id. :presence => true
+  validates :ch_string, :q_id, :presence => true
 
   belongs_to(
     :question,
@@ -11,10 +11,16 @@ class Choice < ActiveRecord::Base
   )
 
   has_many(
-    :response,
+    :responses,
     :class_name => "Response",
     :foreign_key => :choice_id,
     :primary_key => :id
+  )
+
+  has_many(
+    :users,
+    :through => :responses,
+    :source => :user
   )
 
 end
